@@ -1,0 +1,12 @@
+data<-read.table("./ExploratoryDataAnalysis/household_power_consumption.txt",header=TRUE,sep=";")
+library(dplyr)
+pwr_cons<-tbl_df(data)
+pwr_cons<-mutate(pwr_cons,Date=as.Date(Date),Time=strptime(Time))
+two_day_period<-filter(pwr_cons,Date=="1/2/2007" | Date=="2/2/2007")
+png("./ExploratoryDataAnalysis/Project1/Plot2.png")
+plot(as.numeric(as.character(two_day_period$Global_active_power)),pch=20,type="l",
+     ylab="Global active power (kilowatts)",xlab="",lwd=2,axes=FALSE)
+axis(2,at=c(0,2,4,6),label=c(0,2,4,6))
+axis(1,at=c(0,1450,2850),label=c("Thu","Fri","Sat"))
+box(which="plot",lwd=2)
+dev.off()
